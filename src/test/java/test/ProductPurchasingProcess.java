@@ -3,11 +3,13 @@ package test;
 import cucumber.api.java.cs.A;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import steps.CheckOutProcess;
 import steps.LoginPage;
+import steps.ScreenShotCommend;
 import steps.SearchProductProcess;
 
 import java.util.concurrent.TimeUnit;
@@ -23,7 +25,7 @@ public class ProductPurchasingProcess {
                 "src/main/resources/driver/chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         driver.get("https://prod-kurs.coderslab.pl/index.php?controller=authentication&back=my-account");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.SignIn("Amalysz@mail.com","Amalysz");
@@ -34,6 +36,7 @@ public class ProductPurchasingProcess {
 
     @When("User can select size and amount of product")
     public void ProductDetails(){
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         SearchProductProcess searchProductProcess = new SearchProductProcess(driver);
         searchProductProcess.SetProductDetails("M","5");
     }
@@ -52,5 +55,10 @@ public class ProductPurchasingProcess {
     public void PaymentDetails() {
         CheckOutProcess checkOutProcess = new CheckOutProcess(driver);
         checkOutProcess.PaymentDetailsSteps();
+    }
+    @Then("User can make an screenshot of order confirmation and price")
+    public void Screenshot() {
+        ScreenShotCommend screenShotCommend = new ScreenShotCommend(driver);
+        screenShotCommend.takeSnapShot();
     }
 }

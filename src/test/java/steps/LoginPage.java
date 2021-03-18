@@ -15,6 +15,7 @@ public class LoginPage {
     public void SignIn(String email, String password) {
         WebElement Email  = driver.findElement(By.name("email"));
         Email.sendKeys(email);
+
         WebElement Password = driver.findElement(By.name("password"));
         Password.sendKeys(password);
         Password.submit();
